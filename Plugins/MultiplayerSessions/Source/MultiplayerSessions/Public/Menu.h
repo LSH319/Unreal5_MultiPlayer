@@ -6,6 +6,8 @@
 #include "Blueprint/UserWidget.h"
 #include "Menu.generated.h"
 
+class UMultiplayerSessionsSubsystem;
+class UButton;
 /**
  * 
  */
@@ -16,5 +18,31 @@ class MULTIPLAYERSESSIONS_API UMenu : public UUserWidget
 
 public:
 	UFUNCTION(BlueprintCallable)
-	void MenuSetup();
+	void MenuSetup(int32 NumberOfPublicConnections = 4, FString TypeOfMatch = FString(TEXT("FFA")));
+
+protected:
+	virtual bool Initialize() override;
+	virtual void NativeDestruct() override;
+	
+	UFUNCTION()
+	void OnCreateSession(bool bWasSuccessful);
+private:
+	UPROPERTY(meta = (BindWidget))
+	TObjectPtr<UButton> HostButton;
+
+	UPROPERTY(meta = (BindWidget))
+	TObjectPtr<UButton> JoinButton;
+
+	UFUNCTION()
+	void HostButtonClicked();
+
+	UFUNCTION()
+	void JoinButtonClicked();
+
+	void MenuTearDown();
+	
+	UMultiplayerSessionsSubsystem* MultiplayerSessionsSubsystem;
+
+	int32 NumPublicConnections{4};
+	FString MatchType{TEXT("FFA")};
 };
