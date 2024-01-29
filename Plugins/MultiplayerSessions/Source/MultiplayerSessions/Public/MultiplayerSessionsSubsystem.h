@@ -7,6 +7,8 @@
 #include "Subsystems/GameInstanceSubsystem.h"
 #include "MultiplayerSessionsSubsystem.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FMultiplayerOnCreateSessionComplete, bool, bWasSuccessful);
+
 /**
  * 
  */
@@ -24,6 +26,7 @@ public:
 	void DestroySession();
 	void StartSession();
 
+	FMultiplayerOnCreateSessionComplete MultiplayerOnCreateSessionComplete;
 protected:
 	//Delegate에 바인딩 될 함수
 	void OnCreateSessionComplete(FName SessionName, bool bWasSuccessful);
@@ -34,7 +37,8 @@ protected:
 	
 private:
 	IOnlineSessionPtr SessionInterface;
-
+	TSharedPtr<FOnlineSessionSettings> LastSessionSettings;
+	
 	//Session 내부 콜백 바인딩할 Delegate
 	FOnCreateSessionCompleteDelegate CreateSessionCompleteDelegate;
 	FOnFindSessionsCompleteDelegate FindSessionsCompleteDelegate;
