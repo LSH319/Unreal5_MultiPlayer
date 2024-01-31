@@ -44,6 +44,7 @@ protected:
 private:
 	IOnlineSessionPtr SessionInterface;
 	TSharedPtr<FOnlineSessionSettings> LastSessionSettings;
+	TSharedPtr<FOnlineSessionSearch> LastSessionSearch;
 	
 	//Session 내부 콜백 바인딩할 Delegate
 	FOnCreateSessionCompleteDelegate CreateSessionCompleteDelegate;
