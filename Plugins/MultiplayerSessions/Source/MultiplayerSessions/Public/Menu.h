@@ -19,7 +19,7 @@ class MULTIPLAYERSESSIONS_API UMenu : public UUserWidget
 
 public:
 	UFUNCTION(BlueprintCallable)
-	void MenuSetup(int32 NumberOfPublicConnections = 4, FString TypeOfMatch = FString(TEXT("FFA")));
+	void MenuSetup(int32 NumberOfPublicConnections = 4, FString TypeOfMatch = FString(TEXT("FreeForAll")), FString LobbyPath = FString(TEXT("/Game/ThirdPerson/Maps/Lobby")));
 
 protected:
 	virtual bool Initialize() override;
@@ -37,13 +37,11 @@ protected:
 private:
 	UPROPERTY(meta = (BindWidget))
 	TObjectPtr<UButton> HostButton;
-
 	UPROPERTY(meta = (BindWidget))
 	TObjectPtr<UButton> JoinButton;
 
 	UFUNCTION()
 	void HostButtonClicked();
-
 	UFUNCTION()
 	void JoinButtonClicked();
 
@@ -53,4 +51,5 @@ private:
 
 	int32 NumPublicConnections{4};
 	FString MatchType{TEXT("FFA")};
+	FString PathToLobby{TEXT("")};
 };
